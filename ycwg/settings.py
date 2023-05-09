@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'knox',
-    # In Folder Installed APp
-    'api',
+    # In Folder Installed App
+    'party_list',
 ]
 
 MIDDLEWARE = [
