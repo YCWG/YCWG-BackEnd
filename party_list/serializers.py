@@ -4,4 +4,4 @@ from .models import *
 class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
-        fields = ('*')
+        fields = '__all__'
