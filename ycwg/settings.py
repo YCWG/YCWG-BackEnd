@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     # In Folder Installed App
     'ycwg',
     'party_list',
-    'auth'
 ]
 
 MIDDLEWARE = [
