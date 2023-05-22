@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate
 from django.conf import settings
 from django.middleware import csrf
-from rest_framework import exceptions as rest_exceptiojns, response, decorators as rest_decoratros, permission as rest_permission
-from rest_framework_simplejwt import tokens, views as jwt_views, serializers as jwt_serailizers, exceptions as rest_exceptions
+from rest_framework import exceptions as rest_exceptions, response, decorators as rest_decoratros, permission as rest_permission
+from rest_framework_simplejwt import tokens
 from account import serializers, models
 
 def get_user_token(user):
@@ -63,3 +63,19 @@ def registerView(request):
     if user is not None:
         return response.Response("Registered!")
     return rest_exceptions.AuthenticationFailed("Invalid credentials!")
+
+@rest_decoratros.api_view(['POST'])
+@rest_decoratros.permission_classes([rest_permission.IsAuthenticatied])
+def logoutView(request):
+    try:
+        refreshToken = request.COOKIE.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
+        token = tokens.RefreshToken(refreshToken)
+        token.blacklist()
+
+        res = response.Response()
+        res.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
+        res.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
+        res.delete_cookie("X-CSRFToken")
+        return res
+    except:
+        raise rest_exceptions.ParseError("Invalid token")
