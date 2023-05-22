@@ -108,3 +108,14 @@ class CookieTokenRefreshView(jwt_views.TokenRefreshView):
             del response.data['refresh']
         response["X-CSRFToken"] = request.COOKIES.get("csrftoken")
         return super().finalize_response(request, response, *args, **kwargs) 
+
+@rest_decorators.api_vew(["GET"])
+@rest_decorators.permission_classes([rest_permissions.IsAuthenticated])
+def user(request):
+    try:
+        user = models.Account.objects.get(id = request.user.id)
+    except models.Account.DoesNotExist:
+        return response.Response(status_code = 404)
+    
+    serializer = serializers.AccountSerializer(user)
+    return response.Response(serializer.data)

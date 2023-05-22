@@ -204,7 +204,7 @@ SIMPLE_JWT = {
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication', # TODO: For now
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'account.authenticate.CustomAuthentication',
     ],
 
