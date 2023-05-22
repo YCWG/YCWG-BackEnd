@@ -8,7 +8,7 @@ def enforce_csrf(request):
     if reason:
         raise rest_exceptions.PermissionDenied('CSRF Failed: %s', reason)
     
-class CustomAuithentication(jwt_authentication.JWTAuthentication):
+class CustomAuthentication(jwt_authentication.JWTAuthentication):
     def authenticate(self, request):
         header = self.get_header(request)
         raw_token = request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE']) or None

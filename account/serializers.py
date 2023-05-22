@@ -33,7 +33,7 @@ class RegisterationSerializer(serializers.ModelSerializer):
     
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
-    password = serializers.CharField(stype = {"input_type" : "password"}, write_only = True)
+    password = serializers.CharField(style = {"input_type" : "password"}, write_only = True)
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
