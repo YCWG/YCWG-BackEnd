@@ -81,8 +81,15 @@ def logoutView(request):
     except:
         raise rest_exceptions.ParseError("Invalid token")
 
-class CookieTokenRefreshSerializer():
-    pass
+class CookieTokenRefreshSerializer(jwt_serializers.TokenRefreshSerializer):
+    refresh = None
+
+    def validate(self, attrs):
+        attrs['refresh'] = self.context['request'].COOKIES.get('refresh')
+        if attrs["refresh"]:
+            return super().validate(attrs)
+        else:
+            return jwt_exceptions.InvalidToken('No valid token found in cookie')
 
 class CookieTokenRefreshView(jwt_views.TokenRefreshView):
     serializer_class = CookieTokenRefreshSerializer
@@ -100,4 +107,4 @@ class CookieTokenRefreshView(jwt_views.TokenRefreshView):
 
             del response.data['refresh']
         response["X-CSRFToken"] = request.COOKIES.get("csrftoken")
-        return super().finalize_response(request, response, *args, **kwargs)
+        return super().finalize_response(request, response, *args, **kwargs) 
