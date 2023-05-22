@@ -8,3 +8,5 @@ class Party(models.Model):
     member_limit = models.IntegerField()
     date = models.DateTimeField()
     description = models.TextField(blank=True)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
