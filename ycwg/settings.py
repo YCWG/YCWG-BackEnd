@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'corsheaders',
-    'rest_framewor_simplejwt.token_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
     # In Folder Installed App
     'ycwg',
     'party_list',
