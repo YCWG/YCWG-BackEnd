@@ -56,7 +56,7 @@ def loginView(request):
 @rest_decorators.api_view(["POST"])
 @rest_decorators.permission_classes([])
 def registerView(request):
-    serializer = serializers.RegistrationSerializer(data=request.data)
+    serializer = serializers.RegisterationSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
 
     user = serializer.save()
@@ -81,6 +81,7 @@ def logoutView(request):
         res.delete_cookie("X-CSRFToken")
         res.delete_cookie("csrftoken")
         res["X-CSRFToken"]=None
+        res.delete_cookie("csrftoken")
         
         return res
     except:

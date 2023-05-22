@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
+
 class RegisterationSerializer(serializers.ModelSerializer):
     
     password2 = serializers.CharField(style = {"input_type" : "password"})
@@ -31,9 +32,10 @@ class RegisterationSerializer(serializers.ModelSerializer):
 
         return user
     
-class LoginSerializer(serializers.ModelSerializer):
+class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    password = serializers.CharField(style = {"input_type" : "password"}, write_only = True)
+    password = serializers.CharField(
+        style={"input_type": "password"}, write_only=True)
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
