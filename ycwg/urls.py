@@ -9,5 +9,5 @@ urlpatterns = [
     path('partylist/', include("party_list.urls")),
     path('admin/', admin.site.urls),
     path('auth/', include('auth.urls')),
-    path('account/', include('account.urls'))
+    path('api/auth/', include('account.urls'))
 ]

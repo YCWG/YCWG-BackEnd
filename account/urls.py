@@ -1,9 +1,8 @@
 from django.urls import path
-from account.views import *
-
-app_name = "accout"
+from account import views
 
 urlpatterns = [
-    path('csrf/', get_csrf.as_view(), name = 'api-csrf'),
-    path('login/', loginView.as_view(), name = "api-login")
+    path('login', views.loginView ),
+    path('register', views.registerView),
+    path('refresh-token', views.refreshTokenView)
 ]
