@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from django.conf import settings
-from account.models import Account
+from django.contrib.auth import get_user_model
 
 class RegisterationSerializer(serializers.ModelSerializer):
     
     password2 = serializers.CharField(style = {"input_type" : "password"})
 
     class Meta:
-        model = settings.AUTH_USER_MODEL
+        model = get_user_model()
         fields = ('username', 'email', 'password', 'password2')
         extra_kwargs = {
             "password": {"write_only" : True},
@@ -15,7 +15,7 @@ class RegisterationSerializer(serializers.ModelSerializer):
         }
 
     def save(self):
-        user = settings.AUTH_USER_MODEL(
+        user = get_user_model()(
             email = self.validated_data["email"],
             username = self.validated_data["username"],
         )
@@ -35,3 +35,7 @@ class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     password = serializers.CharField(stype = {"input_type" : "password"}, write_only = True)
 
+class AccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ("username", "email")
