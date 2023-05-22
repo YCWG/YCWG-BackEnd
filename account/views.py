@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate
 from django.conf import settings
 from django.middleware import csrf
-from rest_framework import exceptions as rest_exceptions, response, decorators as rest_decoratros, permission as rest_permission
-from rest_framework_simplejwt import tokens
+from rest_framework import exceptions as rest_exceptions, response, decorators as rest_decorators, permissions as rest_permissions
+from rest_framework_simplejwt import tokens, views as jwt_views, serializers as jwt_serializers, exceptions as jwt_exceptions
 from account import serializers, models
+
 
 def get_user_token(user):
     refresh = tokens.RefreshToken.for_user(user)
@@ -12,8 +13,8 @@ def get_user_token(user):
         "refresh_token" : str(refresh)
     }
 
-@rest_decoratros.api_view("POST")
-@rest_decoratros.permission_classes([])
+@rest_decorators.api_view("POST")
+@rest_decorators.permission_classes([])
 def loginView(request):
     serializer = serializers.LoginSerializer(data=request.data)
     serializer.is_valid(raise_exception = True)
@@ -52,8 +53,8 @@ def loginView(request):
     raise rest_exceptions.AuthenticationFailed(
         "Email or Password is incorrect")
 
-@rest_decoratros.api_view(["POST"])
-@rest_decoratros.permission_classes([])
+@rest_decorators.api_view(["POST"])
+@rest_decorators.permission_classes([])
 def registerView(request):
     serializer = serializers.RegisterationSerializer(data = request.data)
     serializer.is_valid(raise_exception=True)
@@ -64,8 +65,8 @@ def registerView(request):
         return response.Response("Registered!")
     return rest_exceptions.AuthenticationFailed("Invalid credentials!")
 
-@rest_decoratros.api_view(['POST'])
-@rest_decoratros.permission_classes([rest_permission.IsAuthenticatied])
+@rest_decorators.api_view(['POST'])
+@rest_decorators.permission_classes([rest_permissions.IsAuthenticatied])
 def logoutView(request):
     try:
         refreshToken = request.COOKIE.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
@@ -79,3 +80,24 @@ def logoutView(request):
         return res
     except:
         raise rest_exceptions.ParseError("Invalid token")
+
+class CookieTokenRefreshSerializer():
+    pass
+
+class CookieTokenRefreshView(jwt_views.TokenRefreshView):
+    serializer_class = CookieTokenRefreshSerializer
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        if response.data.get("refresh"):
+            response.set_cookie(
+                key = settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
+                value = response.data['refresh'],
+                expires = settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+            )
+
+            del response.data['refresh']
+        response["X-CSRFToken"] = request.COOKIES.get("csrftoken")
+        return super().finalize_response(request, response, *args, **kwargs)
