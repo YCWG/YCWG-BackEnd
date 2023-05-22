@@ -7,10 +7,10 @@ from account import serializers, models
 
 def get_user_token(user):
     refresh = tokens.RefreshToken.for_user(user)
-    return(
-        "refresh_token" : str(refresh),
-        "access_token" : str(refresh.access_token)
-    )
+    return{
+        "access_token" : str(refresh.access_token),
+        "refresh_token" : str(refresh)
+    }
 
 @rest_decoratros.api_view("POST")
 @rest_decoratros.permission_classes([])
