@@ -51,3 +51,15 @@ def loginView(request):
         return res
     raise rest_exceptions.AuthenticationFailed(
         "Email or Password is incorrect")
+
+@rest_decoratros.api_view(["POST"])
+@rest_decoratros.permission_classes([])
+def registerView(request):
+    serializer = serializers.RegisterationSerializer(data = request.data)
+    serializer.is_valid(raise_exception=True)
+
+    user = serializer.save()
+
+    if user is not None:
+        return response.Response("Registered!")
+    return rest_exceptions.AuthenticationFailed("Invalid credentials!")
