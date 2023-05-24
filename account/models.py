@@ -44,6 +44,10 @@ class Account(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    background_image = models.ImageField(null = True)
+    user_profile = models.ImageField(null = True)
+    user_bio = models.TextField(null = True)
+
 
     objects = AccountManager()
 
