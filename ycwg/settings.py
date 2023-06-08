@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'rest_framework.authtoken',
     'rest_framework',
     "corsheaders",
+    'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     # In Folder Installed App
     'ycwg',
@@ -132,12 +133,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:8000"
 ]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTP_ONLY = True
 CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
     "http://localhost:5173"
 ]
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
@@ -182,7 +185,7 @@ SIMPLE_JWT = {
     # Cookie name. Enables cookies if value is set.
     'AUTH_COOKIE_REFRESH': 'refresh',
     # A string like "example.com", or None for standard domain cookie.
-    'AUTH_COOKIE_DOMAIN': 'port-0-ycwg-backend-1maxx2klgvs8aq4.sel3.cloudtype.app/',
+    'AUTH_COOKIE_DOMAIN': 'port-0-ycwg-backend-1maxx2klgvs8aq4.sel3.cloudtype.app',
     # Whether the auth cookies should be secure (https:// only).
     'AUTH_COOKIE_SECURE': False, 
     # Http only cookie flag.It's not fetch by javascript.
@@ -202,6 +205,10 @@ REST_FRAMEWORK = {
 
     "DEFAULT_PERMISSION_CLASSES": [
         'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }
 
