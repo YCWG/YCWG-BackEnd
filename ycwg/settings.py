@@ -132,17 +132,24 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:8000"
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "http://localhost:8000",
+#     "https://port-0-ycwg-backend-1maxx2klgvs8aq4.sel3.cloudtype.app"
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTP_ONLY = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://port-0-ycwg-backend-1maxx2klgvs8aq4.sel3.cloudtype.app"
 ]
+
+
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = "None"
