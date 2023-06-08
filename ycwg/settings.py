@@ -208,3 +208,7 @@ REST_FRAMEWORK = {
 
 
 AUTH_USER_MODEL = "account.Account"
+
+ALLOWED_HOSTS = [
+    '*' 
+]
