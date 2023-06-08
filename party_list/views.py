@@ -8,6 +8,7 @@ from .models import Party
 
 class PartyListAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         queryset = Party.objects.all()
         serializer = PartyListSerializer(queryset, many=True)
@@ -22,6 +23,7 @@ class PartyListAPIView(APIView):
     
 class PartyImageAPIView(APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request):
         serializer = PartyImageSerializer(data=request.data)
         if serializer.is_valid():
