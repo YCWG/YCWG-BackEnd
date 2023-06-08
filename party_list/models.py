@@ -6,7 +6,7 @@ class Party(models.Model):
     image = models.ImageField(upload_to='', blank=True, null=True)
     category = models.CharField(max_length=24)
     place = models.CharField(max_length=255)
-    member_limit = models.IntegerField()
+    member_limit = models.IntegerField(default = 0)
     now_member = models.IntegerField(default = 1)
     date = models.DateTimeField()
     description = models.TextField(blank=True)
