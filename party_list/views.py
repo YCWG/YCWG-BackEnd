@@ -20,6 +20,15 @@ class PartyListAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class PartyImageAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        serializer = PartyImageSerializer
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 class PartyListDetailAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Party.objects.all()

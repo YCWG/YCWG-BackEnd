@@ -5,3 +5,8 @@ class PartyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
         fields = '__all__'
+
+class PartyImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Party
+        fields = 'image'
