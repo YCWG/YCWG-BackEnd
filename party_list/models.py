@@ -12,10 +12,6 @@ class Party(models.Model):
     description = models.TextField(blank=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    upload_date = models.DateTimeField('UPLOAD DATE', auto_now_add=True)
-
-    class Meta:
-        ordering = ('upload_date',)
 
     def __str__(self):
         return self.title
