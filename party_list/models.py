@@ -8,13 +8,10 @@ class Party(models.Model):
     member_limit = models.IntegerField(default = 0)
     now_member = models.IntegerField(default = 1)
     date = models.DateTimeField()
+    image = models.ImageField(upload_to='image/', blank=True, null=True)
     description = models.TextField(blank=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
     
     def __str__(self):
         return self.title
-    
-class Image(models.Model):
-    party = models.ForeignKey(Party, on_delete=models.CASCADE, null = True)
-    image = models.ImageField(upload_to='image/', blank=True, null=True)
