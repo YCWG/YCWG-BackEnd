@@ -4,9 +4,9 @@ from .models import *
 class PartyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
-        fields = ['id','title', 'category', 'place', 'member_limit', 'now_member', 'date', 'description', 'latitude', 'longitude']
+        fields = '__all__'
 
 class PartyImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Party
-        fields = ['image']
+        model = Image
+        fields = '__all__'
