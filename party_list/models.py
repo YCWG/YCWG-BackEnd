@@ -17,4 +17,4 @@ class Party(models.Model):
         return self.title
     
 class Image(models.Model):
-    image = models.ImageField(upload_to='', null = True)
+    image = models.ImageField(upload_to='', null = True, use_url = True)
