@@ -24,8 +24,10 @@ class PartyListAPIView(APIView):
 class PartyImageAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        serializer = PartyImageSerializer(data=request.data)
+    def put(self, request, pk):
+        queryset = Party.objects.all(pk=pk)
+        serializer = PartyImageSerializer(queryset, data=request.data, partial=True)
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
