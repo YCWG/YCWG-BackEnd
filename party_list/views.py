@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
 from .serializers import *
 from .models import Party
+from django.http import FileResponse
 
 class PartyListAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -29,7 +30,9 @@ class PartyImageAPIView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            img = serializer.data
+            response = FileResponse(img)
+            return response
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class PartyListDetailAPIView(RetrieveUpdateDestroyAPIView):
