@@ -10,8 +10,8 @@ class Party(models.Model):
     date = models.CharField(max_length=28, null = True)
     image = models.ImageField(upload_to='', null = True)
     description = models.TextField(blank=True)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    latitude = models.FloatField(null = True)
+    longitude = models.FloatField(null = True)
     
     def __str__(self):
         return self.title
