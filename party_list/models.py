@@ -8,7 +8,7 @@ class Party(models.Model):
     member_limit = models.IntegerField(default = 0)
     now_member = models.IntegerField(default = 1)
     date = models.CharField(max_length=28)
-    image = models.ImageField(upload_to='image/', blank=True, null=True)
+    image = models.ImageField(upload_to='', blank=True, null=True)
     description = models.TextField(blank=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
