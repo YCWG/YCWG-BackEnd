@@ -7,6 +7,10 @@ class PartyListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PartyImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField('get_image_url')
     class Meta:
         model = Image
-        fields = ['image']
+        fields = ['image', 'image_url']
+
+    def get_image_url(self, obj):
+        return obj.image.url
